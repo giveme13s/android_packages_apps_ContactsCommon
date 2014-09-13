@@ -734,5 +734,5 @@ a        ren't members of any other group. [CHAR LIMIT=25] -->
 
     <!-- Font family used when drawing letters for letter tile avatars.
          Do not translate. -->
-    <string name="letter_tile_letter_font_family">sans-serif-thin</string>
+    <string name="letter_tile_letter_font_family" translatable="false">sans-serif-thin</string>
 </resources>
