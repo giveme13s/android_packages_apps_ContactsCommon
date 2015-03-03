@@ -149,4 +149,7 @@
     <!-- Color of the background of the contact detail and editor pages -->
     <color name="background_primary">#f9f9f9</color>
     <color name="contact_all_list_background_color">#FFFFFF</color>
+
+    <color name="contact_tile_text_color">#ff202020</color>
+    <color name="frequent_contact_text_color">#ff000000</color>
 </resources>
