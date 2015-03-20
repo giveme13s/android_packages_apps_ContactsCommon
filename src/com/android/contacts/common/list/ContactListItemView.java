@@ -49,6 +49,7 @@ import com.android.contacts.common.ContactPresenceIconUtil;
 import com.android.contacts.common.ContactStatusUtil;
 import com.android.contacts.common.R;
 import com.android.contacts.common.format.TextHighlighter;
+import com.android.contacts.common.util.ContactDisplayUtils;
 import com.android.contacts.common.util.SearchUtil;
 import com.android.contacts.common.util.ViewUtil;
 import com.android.contacts.common.widget.CheckableImageView;
@@ -905,6 +906,7 @@ public class ContactListItemView extends ViewGroup
             mPhoneticNameTextView.setSingleLine(true);
             mPhoneticNameTextView.setEllipsize(getTextEllipsis());
             mPhoneticNameTextView.setTextAppearance(getContext(), android.R.style.TextAppearance_Small);
+            mPhoneticNameTextView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             mPhoneticNameTextView.setTypeface(mPhoneticNameTextView.getTypeface(), Typeface.BOLD);
             mPhoneticNameTextView.setActivated(isActivated());
             mPhoneticNameTextView.setId(R.id.cliv_phoneticname_textview);
@@ -1030,6 +1032,7 @@ public class ContactListItemView extends ViewGroup
             mDataView.setSingleLine(true);
             mDataView.setEllipsize(getTextEllipsis());
             mDataView.setTextAppearance(getContext(), R.style.TextAppearanceSmall);
+            mDataView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             mDataView.setActivated(isActivated());
             mDataView.setId(R.id.cliv_data_view);
             mDataView.setElegantTextHeight(false);
@@ -1049,6 +1052,13 @@ public class ContactListItemView extends ViewGroup
         } else {
             mTextHighlighter.setPrefixText(getSnippetView(), text, mHighlightedPrefix);
             mSnippetView.setVisibility(VISIBLE);
+            if (ContactDisplayUtils.isPossiblePhoneNumber(text)) {
+                // Give the text-to-speech engine a hint that it's a phone number
+                mSnippetView.setContentDescription(
+                        ContactDisplayUtils.getTelephoneTtsSpannable(text));
+            } else {
+                mSnippetView.setContentDescription(null);
+            }
         }
     }
 
@@ -1061,6 +1071,7 @@ public class ContactListItemView extends ViewGroup
             mSnippetView.setSingleLine(true);
             mSnippetView.setEllipsize(getTextEllipsis());
             mSnippetView.setTextAppearance(getContext(), android.R.style.TextAppearance_Small);
+            mSnippetView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             mSnippetView.setActivated(isActivated());
             addView(mSnippetView);
         }
@@ -1160,6 +1171,14 @@ public class ContactListItemView extends ViewGroup
             name = mUnknownNameText;
         }
         setMarqueeText(getNameTextView(), name);
+
+        if (ContactDisplayUtils.isPossiblePhoneNumber(name)) {
+            // Give the text-to-speech engine a hint that it's a phone number
+            mNameTextView.setContentDescription(
+                    ContactDisplayUtils.getTelephoneTtsSpannable(name.toString()));
+        } else {
+            mNameTextView.setContentDescription(null);
+        }
     }
 
     public void hideDisplayName() {
