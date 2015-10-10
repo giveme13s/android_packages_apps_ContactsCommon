@@ -57,6 +57,8 @@ public class Contact {
         NOT_FOUND,
     }
 
+    public static final String CONTACT_URI_EXTRA = "contact_uri_extra";
+
     private final Uri mRequestedUri;
     private final Uri mLookupUri;
     private final Uri mUri;
@@ -96,6 +98,9 @@ public class Contact {
 
     private final Contact.Status mStatus;
     private final Exception mException;
+
+    private String mProviderName;
+    private int mSpamCount = 0;
 
     /**
      * Constructor for special results, namely "no contact found" and "error".
@@ -219,7 +224,7 @@ public class Contact {
         mDirectoryExportSupport = exportSupport;
     }
 
-    /* package */ void setPhotoBinaryData(byte[] photoBinaryData) {
+    public void setPhotoBinaryData(byte[] photoBinaryData) {
         mPhotoBinaryData = photoBinaryData;
     }
 
@@ -492,5 +497,21 @@ public class Contact {
 
     /* package */ void setGroupMetaData(ImmutableList<GroupMetaData> groups) {
         mGroups = groups;
+    }
+
+    public int getSpamCount() {
+        return mSpamCount;
+    }
+
+    public void setSpamCount(int spamCount) {
+        mSpamCount = spamCount;
+    }
+
+    public String getProviderName() {
+        return mProviderName;
+    }
+
+    public void setProviderName(String providerName) {
+        mProviderName = providerName;
     }
 }
